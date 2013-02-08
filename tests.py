@@ -197,7 +197,7 @@ class DjangoCacheTestCase(BaseTestCase):
         os.environ['MEMCACHED_USERNAME'] = 'mchammer'
         os.environ['MEMCACHED_PASSWORD'] = 'pword'
         os.environ['MEMCACHED_SERVERS'] = '127.0.0.1:11211 127.0.0.1:11212 127.0.0.1:11213'
-        
+
         config = self.parser.config()
 
         self.assertEquals(config['BACKEND'], 'django.core.cache.backends.memcached.PyLibMCCache')
@@ -288,9 +288,15 @@ class RedisToGoTestCase(RedisTestCase):
         self.assertEqual(config['REDIS_PASSWORD'], '44ec0bc04dd4a5afe77a649acee7a8f3')
 
 
-# class SentryTestCase(BaseTestCase):
-#     def test(self):
-#         app.config.setdefault('SENTRY_DSN', environ.get('SENTRY_DSN'))
+class SentryTestCase(BaseTestCase):
+    parser = parsnip.sentry.parser
+    
+    def setUp(self):
+        os.environ['SENTRY_DSN'] = 'https://random_key:random_password@getsentry.com/1'
+
+    def test(self):
+        config = self.parser.config()
+        ig.setdefault('SENTRY_DSN', environ.get('SENTRY_DSN'))
 
 # class SQLAlchemyTestCase(BaseTestCase):
 #     def test(self):

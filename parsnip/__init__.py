@@ -49,3 +49,4 @@ parser = Parser()
 from . import django
 from . import mongodb
 from . import redis
+from . import sentry
